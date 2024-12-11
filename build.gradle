@@ -34,7 +34,12 @@ dependencies {
 //    testImplementation 'com.h2database:h2'   // H2 테스트용
 
     runtimeOnly 'com.mysql:mysql-connector-j'
+
+
 }
+
+
+
 
 tasks.named('test') {
     useJUnitPlatform()

@@ -48,7 +48,7 @@ build/
 docker/
 
 # 환경 변수 파일
-.env
+docker/.env
 
 # 시스템 파일
 .DS_Store

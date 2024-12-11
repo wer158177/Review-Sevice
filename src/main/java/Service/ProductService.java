@@ -20,24 +20,24 @@ public class ProductService {
 
 
     // 조회 메소드
-    public void getProductReviews(Long productId,ProductRequest productRequest){
-
-        return;
-    }
+//    public ProductResponse getProductReviews(Long productId, ProductRequest productRequest){
+//        //조회 로직 구현필요
+//        return;
+//    }
 
     // 작성 메소드
     public void saveProductReviews(Long productId, ReviewRequest reviewRequest){
-
+        //작성 로직 구현 필요
     }
 
-    // 수정 메소드
-    public void updateProductReview(Long productId, ReviewRequest reviewRequest){
 
+    // 리뷰 수정 메소드
+    public void updateProductReview(Long productId, Long reviewId, ReviewRequest reviewRequest) {
+        // 리뷰 수정 로직 구현 필요
     }
 
-    // 삭제 메소드
-    public void deleteProductReview(Long productId, Long reviewId, ReviewRequest reviewRequest){
-
+    // 리뷰 삭제 메소드
+    public void deleteProductReview(Long productId, Long reviewId) {
+        // 리뷰 삭제 로직 구현 필요
     }
-
 }

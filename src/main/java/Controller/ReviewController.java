@@ -16,14 +16,14 @@ public class ReviewController {
  private ProductService productService;
 
     //리뷰 조회 api
-    @GetMapping("/{productId}/reviews")
-    public ResponseEntity<ProductResponse> getReviews(
-            @PathVariable Long productId,
-            @ModelAttribute ProductRequest productRequest) {
-
-
-        return ResponseEntity.ok(response);
-    }
+//    @GetMapping("/{productId}/reviews")
+//    public ResponseEntity<ProductResponse> getReviews(
+//            @PathVariable Long productId,
+//            @ModelAttribute ProductRequest productRequest) {
+//
+//        ProductResponse response = productService.getProductReviews(productId, productRequest);
+//        return ResponseEntity.ok(response);
+//    }
 
     //리뷰 작성 api
     @PostMapping("/{productId}/reviews")
