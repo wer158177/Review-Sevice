@@ -1,11 +1,10 @@
-package Controller;
+package com.hangha.reviewservice.Controller;
 
 
 
-import DTO.ProductRequest;
-import DTO.ProductResponse;
-import DTO.ReviewRequest;
-import Service.ProductService;
+
+import com.hangha.reviewservice.DTO.ReviewRequest;
+import com.hangha.reviewservice.Service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +12,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/products")
 public class ReviewController {
 
- private ProductService productService;
+ private final ProductService productService;
 
-    //리뷰 조회 api
+    public ReviewController(ProductService productService) {
+        this.productService = productService;
+    }
+
+
+//    리뷰 조회 api
 //    @GetMapping("/{productId}/reviews")
 //    public ResponseEntity<ProductResponse> getReviews(
 //            @PathVariable Long productId,
@@ -30,7 +34,7 @@ public class ReviewController {
     public ResponseEntity<String> saveReview(
             @PathVariable Long productId,
             @RequestBody ReviewRequest reviewRequest) {
-
+        System.out.println("데이터들어옴"+reviewRequest);
         productService.saveProductReviews(productId, reviewRequest);
         return ResponseEntity.ok("작성 완료");
     }

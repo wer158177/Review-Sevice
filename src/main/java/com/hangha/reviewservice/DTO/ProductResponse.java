@@ -1,4 +1,4 @@
-package DTO;
+package com.hangha.reviewservice.DTO;
 
 
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package Repository;
+package com.hangha.reviewservice.Repository;
 
-import domain.Product;
+import com.hangha.reviewservice.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

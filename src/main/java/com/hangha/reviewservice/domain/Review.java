@@ -1,4 +1,4 @@
-package domain;
+package com.hangha.reviewservice.domain;
 
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -27,7 +27,6 @@ public class Review {
 
     private LocalDateTime createdAt;
 
-    // 연관 관계 설정
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;

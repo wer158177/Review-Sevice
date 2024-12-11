@@ -1,4 +1,4 @@
-package DTO;
+package com.hangha.reviewservice.DTO;
 
 
 import lombok.AllArgsConstructor;
@@ -11,6 +11,6 @@ import lombok.Setter;
 public class ReviewRequest {
     //리뷰 등록 DTO
     private Long userId;
-    private Long score;
+    private float score;
     private String content;
 }
