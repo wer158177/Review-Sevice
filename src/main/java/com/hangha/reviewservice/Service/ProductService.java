@@ -4,6 +4,7 @@ package com.hangha.reviewservice.Service;
 import com.hangha.reviewservice.DTO.ProductRequest;
 import com.hangha.reviewservice.DTO.ProductResponse;
 import com.hangha.reviewservice.DTO.ReviewRequest;
+import com.hangha.reviewservice.DTO.ReviewResponse;
 import com.hangha.reviewservice.Repository.ProductRepository;
 import com.hangha.reviewservice.Repository.ReviewRepository;
 import com.hangha.reviewservice.domain.Product;
@@ -12,6 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -27,15 +29,41 @@ public class ProductService {
     }
 
 
-//   //조회 메소드
-//    public ProductResponse getProductReviews(Long productId, ProductRequest productRequest){
-//        Product product = productRepository.findById(productId)
-//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 제품입니다."));
-//        //리뷰 페이징 조회
-//        List<Review> reviews = reviewRepository.findAllByProductId(productId);
-//
-//        return;
-//    }
+   //조회 메소드
+   @Transactional
+   public ProductResponse getProductReviews(Long productId, Long cursor, int size) {
+       if (!productRepository.existsById(productId)) {
+           throw new IllegalArgumentException("존재하지 않는 제품입니다.");
+       }
+
+       // 총 리뷰 수와 평균 점수 계산
+       int totalCount = reviewRepository.countByProductId(productId);
+       float averageScore = reviewRepository.averageScoreByProductId(productId);
+
+       List<Review> reviews = reviewRepository.findByProductIdAndCursor(productId, cursor, size);
+
+       List<ReviewResponse> reviewResponses = reviews.stream()
+               .map(this::convertToReviewResponse)
+               .collect(Collectors.toList());
+
+       // 마지막 커서 계산
+       Long lastCursor = reviewResponses.isEmpty() ? null : reviewResponses.get(reviewResponses.size() - 1).getId();
+
+       return new ProductResponse(productId, averageScore, lastCursor, totalCount, reviewResponses);
+   }
+
+    // DTO 변환 메서드
+    private ReviewResponse convertToReviewResponse(Review review) {
+        return new ReviewResponse(
+                review.getId(),
+                review.getUserId(),
+                review.getScore(),
+                review.getContent(),
+                review.getImageUrl(),
+                review.getCreatedAt()
+        );
+    }
+
 
     @Transactional
     public void saveProductReviews(Long productId, ReviewRequest reviewRequest) {
@@ -49,22 +77,22 @@ public class ProductService {
         }
 
         //이미지처리
-        String uploadImage = s3DummyService.uploadFile(reviewRequest.getImage());
+        String uploadImage = s3DummyService.uploadFile(reviewRequest.getImageFileName());
 
         // 리뷰 생성 및 저장
         Review review = Review.builder()
                 .userId(reviewRequest.getUserId())
                 .score(reviewRequest.getScore())
                 .content(reviewRequest.getContent())
-                .imageFileName(uploadImage)
+                .imageUrl(uploadImage)
                 .product(product)
                 .build();
 
         reviewRepository.save(review);
 
-        // 평균 점수 및 리뷰 수 업데이트
-        updateProductScore(product);
     }
+
+
 
 
     // 리뷰 수정 메소드
@@ -78,15 +106,4 @@ public class ProductService {
     }
 
 
-
-    private void updateProductScore(Product product) {
-        List<Review> reviews = reviewRepository.findAllByProductId(product.getId());
-        double avgScore = reviews.stream()
-                .mapToDouble(Review::getScore)
-                .average()
-                .orElse(0.0);
-
-        long reviewCount = reviews.size();
-        product.updateReviewStats(reviewCount, (float) avgScore);
-    }
 }

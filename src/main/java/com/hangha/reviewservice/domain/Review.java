@@ -26,7 +26,7 @@ public class Review {
     private String content;
 
     @Column
-    private String imageFileName;
+    private String imageUrl;
 
     private LocalDateTime createdAt;
 
@@ -35,12 +35,12 @@ public class Review {
     private Product product;
 
     @Builder
-    public Review(Long userId, Float score, String content, Product product, String imageFileName) {
+    public Review(Long userId, Float score, String content, Product product, String imageUrl) {
         this.userId = userId;
         this.score = score;
         this.content = content;
         this.product = product;
-        this.imageFileName = imageFileName;
+        this.imageUrl = imageUrl;
         this.createdAt = LocalDateTime.now();
     }
 

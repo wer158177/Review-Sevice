@@ -29,4 +29,5 @@ public class Product {
         this.reviewCount = reviewCount;
         this.score = avgScore;
     }
+
 }

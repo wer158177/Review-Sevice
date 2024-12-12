@@ -7,12 +7,11 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class ReviewRequest {
     //리뷰 등록 DTO
     private Long userId;
     private float score;
     private String content;
-    private MultipartFile image;
+    private MultipartFile imageFileName;
 }

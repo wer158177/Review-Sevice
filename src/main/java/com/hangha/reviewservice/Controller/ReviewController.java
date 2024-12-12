@@ -3,6 +3,8 @@ package com.hangha.reviewservice.Controller;
 
 
 
+import com.hangha.reviewservice.DTO.ProductRequest;
+import com.hangha.reviewservice.DTO.ProductResponse;
 import com.hangha.reviewservice.DTO.ReviewRequest;
 import com.hangha.reviewservice.Service.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -19,21 +21,22 @@ public class ReviewController {
     }
 
 
-//    리뷰 조회 api
-//    @GetMapping("/{productId}/reviews")
-//    public ResponseEntity<ProductResponse> getReviews(
-//            @PathVariable Long productId,
-//            @ModelAttribute ProductRequest productRequest) {
-//
-//        ProductResponse response = productService.getProductReviews(productId, productRequest);
-//        return ResponseEntity.ok(response);
-//    }
+    //리뷰 조회 api
+    @GetMapping("/{productId}/reviews")
+    public ResponseEntity<ProductResponse> getReviews(
+            @PathVariable("productId") Long productId,
+            @RequestParam(value = "cursor", required = false, defaultValue = "0") Long cursor,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+
+        ProductResponse response = productService.getProductReviews(productId, cursor, size);
+        return ResponseEntity.ok(response);
+    }
 
     //리뷰 작성 api
-    @PostMapping("/{productId}/reviews")
+    @PostMapping(value = "/{productId}/reviews", consumes = "multipart/form-data")
     public ResponseEntity<String> saveReview(
             @PathVariable Long productId,
-            @RequestBody ReviewRequest reviewRequest) {
+            @ModelAttribute ReviewRequest reviewRequest) {
         productService.saveProductReviews(productId, reviewRequest);
         return ResponseEntity.ok("작성 완료");
     }
