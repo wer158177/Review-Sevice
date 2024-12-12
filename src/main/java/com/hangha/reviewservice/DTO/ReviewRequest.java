@@ -4,6 +4,7 @@ package com.hangha.reviewservice.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -13,4 +14,5 @@ public class ReviewRequest {
     private Long userId;
     private float score;
     private String content;
+    private MultipartFile image;
 }

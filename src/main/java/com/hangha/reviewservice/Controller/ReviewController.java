@@ -34,7 +34,6 @@ public class ReviewController {
     public ResponseEntity<String> saveReview(
             @PathVariable Long productId,
             @RequestBody ReviewRequest reviewRequest) {
-        System.out.println("데이터들어옴"+reviewRequest);
         productService.saveProductReviews(productId, reviewRequest);
         return ResponseEntity.ok("작성 완료");
     }

@@ -25,6 +25,9 @@ public class Review {
     @Column(nullable = false)
     private String content;
 
+    @Column
+    private String imageFileName;
+
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,11 +35,12 @@ public class Review {
     private Product product;
 
     @Builder
-    public Review(Long userId, Float score, String content, Product product) {
+    public Review(Long userId, Float score, String content, Product product, String imageFileName) {
         this.userId = userId;
         this.score = score;
         this.content = content;
         this.product = product;
+        this.imageFileName = imageFileName;
         this.createdAt = LocalDateTime.now();
     }
 
