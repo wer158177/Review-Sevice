@@ -25,8 +25,8 @@ public class ReviewController {
     @GetMapping("/{productId}/reviews")
     public ResponseEntity<ProductResponse> getReviews(
             @PathVariable("productId") Long productId,
-            @RequestParam(value = "cursor", required = false, defaultValue = "0") Long cursor,
-            @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+            @RequestParam(value = "cursor", required = false) Long cursor,
+            @RequestParam(value = "size", required = false) int size) {
 
         ProductResponse response = productService.getProductReviews(productId, cursor, size);
         return ResponseEntity.ok(response);

@@ -14,20 +14,10 @@ public class Product {
     private Long id;
 
     @Column(nullable = false)
-    private Long reviewCount;
+    private Long reviewCount=0L;
 
     @Column(nullable = false)
-    private Float score;
+    private Float score=0.0F;
 
-    // 생성자 추가
-    public Product(Long reviewCount, Float score) {
-        this.reviewCount = reviewCount;
-        this.score = score;
-    }
-
-    public void updateReviewStats(Long reviewCount, Float avgScore) {
-        this.reviewCount = reviewCount;
-        this.score = avgScore;
-    }
 
 }
